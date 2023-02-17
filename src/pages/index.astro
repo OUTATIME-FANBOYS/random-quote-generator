@@ -1,17 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
-
-const response = await fetch('https://api.quotable.io/random');
-const data = await response.json();
-console.log(data)
 ---
+<script>
+	const response = await fetch('https://api.quotable.io/random').then((res) => res.json());
+
+	document.querySelector('.instructionsContent').innerHTML = response.content;
+	document.querySelector('.instructionsAuthor').innerHTML = response.author;
+</script>
 
 <Layout title="Random Quote Generator">
 	<main>
 		<p class="instructions">
-			{ data.content }<br><br>
-			-{ data.author }
+			<span class="instructionsContent" /><br><br>
+			-<span class="instructionsAuthor" />
 		</p>
 		<Card
 			title="Refresh"
@@ -36,6 +38,7 @@ console.log(data)
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		min-height: 100%;
 	}
 
 	.text-gradient {
@@ -62,10 +65,13 @@ console.log(data)
 	.instructions {
 		line-height: 1.6;
 		margin: 1rem 0;
-		background: #4f39fa;
 		padding: 1rem;
 		border-radius: 0.4rem;
-		color: var(--color-bg);
+		color: black;
+		background-color: white;
+		border: #4f39fa 2px solid;
+		font-size: x-large;
+		font-weight: 600;
 	}
 
 	.instructions code {
